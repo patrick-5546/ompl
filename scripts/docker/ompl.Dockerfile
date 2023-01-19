@@ -26,11 +26,6 @@ RUN apt-get update && \
         python3-pip \
         pypy3 \
         wget && \
-    # Install spot
-    wget -O /etc/apt/trusted.gpg.d/lrde.gpg https://www.lrde.epita.fr/repo/debian.gpg && \
-    echo 'deb http://www.lrde.epita.fr/repo/debian/ stable/' >> /etc/apt/sources.list && \
-    apt-get update && \
-    apt-get install -y libspot-dev && \
     pip3 install pygccxml pyplusplus
 COPY . /ompl
 WORKDIR /build
@@ -65,12 +60,7 @@ RUN apt-get update && \
         python3-dev \
         python3-numpy \
         python3-pip \
-        wget && \
-    # Install spot
-    wget -O /etc/apt/trusted.gpg.d/lrde.gpg https://www.lrde.epita.fr/repo/debian.gpg && \
-    echo 'deb http://www.lrde.epita.fr/repo/debian/ stable/' >> /etc/apt/sources.list && \
-    apt-get update && \
-    apt-get install -y libspot-dev
+        wget
 
 COPY --from=builder /usr /usr
 RUN useradd -ms /bin/bash ompl
