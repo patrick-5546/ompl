@@ -30,7 +30,7 @@ RUN apt-get update && \
     # echo 'deb http://www.lrde.epita.fr/repo/debian/ stable/' >> /etc/apt/sources.list && \
     # apt-get update && \
     # apt-get install -y libspot-dev && \
-    pip3 install pygccxml pyplusplus
+    pip3 install pygccxml==2.2.1 pyplusplus
 COPY . /ompl
 WORKDIR /ompl
 RUN echo $PATH
