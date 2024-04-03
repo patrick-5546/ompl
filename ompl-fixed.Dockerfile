@@ -36,7 +36,8 @@ RUN mkdir -p build/Release \
     && NPROC=$(nproc) \
     && HALF_NPROC=$((NPROC / 2)) \
     && cmake ../.. \
-    && make -j $HALF_NPROC update_bindings
+    && make -j $HALF_NPROC update_bindings \
+    && make -j $HALF_NPROC
 # RUN cmake \
 #         -G Ninja \
 #         -B build \
