@@ -1,43 +1,46 @@
 FROM ubuntu:jammy as builder
+COPY install-ompl-ubuntu.sh.in .
+RUN chmod u+x install-ompl-ubuntu.sh.in \
+    && ./install-ompl-ubuntu.sh.in --github --python
 # avoid interactive configuration dialog from tzdata, which gets pulled in
 # as a dependency
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        build-essential \
-        castxml \
-        cmake \
-        libboost-filesystem-dev \
-        libboost-numpy-dev \
-        libboost-program-options-dev \
-        libboost-python-dev \
-        libboost-serialization-dev \
-        libboost-system-dev \
-        libboost-test-dev \
-        libeigen3-dev \
-        libexpat1 \
-        libflann-dev \
-        libtriangle-dev \
-        ninja-build \
-        pkg-config \
-        python3-dev \
-        python3-numpy \
-        python3-pip \
-        pypy3 \
-        wget \
-    && apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
-RUN pip3 install pygccxml pyplusplus
-COPY . /ompl
-WORKDIR /ompl
-RUN mkdir -p build/Release \
-    && cd build/Release \
-    && NPROC=$(nproc) \
-    && HALF_NPROC=$((NPROC / 2)) \
-    && cmake ../.. \
-    && make -j $HALF_NPROC update_bindings \
-    && make -j $HALF_NPROC
+# ENV DEBIAN_FRONTEND=noninteractive
+# RUN apt-get update \
+#     && apt-get install -y --no-install-recommends \
+#         build-essential \
+#         castxml \
+#         cmake \
+#         libboost-filesystem-dev \
+#         libboost-numpy-dev \
+#         libboost-program-options-dev \
+#         libboost-python-dev \
+#         libboost-serialization-dev \
+#         libboost-system-dev \
+#         libboost-test-dev \
+#         libeigen3-dev \
+#         libexpat1 \
+#         libflann-dev \
+#         libtriangle-dev \
+#         ninja-build \
+#         pkg-config \
+#         python3-dev \
+#         python3-numpy \
+#         python3-pip \
+#         pypy3 \
+#         wget \
+#     && apt-get autoremove -y \
+#     && apt-get clean -y \
+#     && rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
+# RUN pip3 install pygccxml pyplusplus
+# COPY . /ompl
+# WORKDIR /ompl
+# RUN mkdir -p build/Release \
+#     && cd build/Release \
+#     && NPROC=$(nproc) \
+#     && HALF_NPROC=$((NPROC / 2)) \
+#     && cmake ../.. \
+#     && make -j $HALF_NPROC update_bindings \
+#     && make -j $HALF_NPROC
 # RUN cmake \
 #         -G Ninja \
 #         -B build \
