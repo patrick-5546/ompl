@@ -85,7 +85,7 @@ find_path(PYTHON_INCLUDE_DIRS "Python.h"
     PATHS
         "${PYTHON_PREFIX}/include"
         [HKEY_LOCAL_MACHINE\\SOFTWARE\\Python\\PythonCore\\${PYTHON_VERSION}\\InstallPath]/include
-    PATH_SUFFIXES python${PYTHON_VERSION} python${PYTHON_VERSION}m
+    PATH_SUFFIXES python${PYTHON_VERSION} python${PYTHON_VERSION}m "x86_64-linux-gnu" "i386-linux-gnu" "aarch64-linux-gnu"
     DOC "Python include directories" NO_DEFAULT_PATH)
 
 execute_process(COMMAND "${PYTHON_EXEC}" "-c"
